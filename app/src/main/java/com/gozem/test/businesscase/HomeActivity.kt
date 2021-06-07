@@ -257,7 +257,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
     @SuppressLint("MissingPermission")
     private fun updateMapView(location: Location, title: String?) {
-        if (allPermissionsGranted(this, *PERMISSIONS)) {
+        if (!allPermissionsGranted(this, *PERMISSIONS)) {
             requestForPermissions(this)
         } else {
             if (mCurrLocationMarker != null) {
