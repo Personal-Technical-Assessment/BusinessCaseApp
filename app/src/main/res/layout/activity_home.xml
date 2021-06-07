@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/user_profile_card_margin"
         app:cardCornerRadius="@dimen/user_profile_card_radius"
-        app:cardElevation="@dimen/user_profile_card_elevation">
+        app:cardElevation="@dimen/user_profile_card_elevation"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +63,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

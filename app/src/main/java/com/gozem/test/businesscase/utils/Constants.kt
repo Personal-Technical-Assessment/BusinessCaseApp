@@ -9,7 +9,7 @@ object Constants {
     val PERMISSIONS: Array<String> = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION
     )
-    const val PERMISSION_ALL = 1
+    const val PERMISSION_ALL = 19
 
     // Application name
     val appName: String = appContext.getString(R.string.app_name)
@@ -33,14 +33,10 @@ object Constants {
     // Data driven type
     const val PROFILE_TYPE = "profile"
     const val MAP_TYPE = "map"
-    const val DATA_TYPE = "data"
 
     // Toast message type
     const val ERROR_TOAST_TYPE = "error"
     const val INFO_TOAST_TYPE = "info"
-
-    // Permission request location key
-    const val MY_PERMISSIONS_REQUEST_LOCATION = 19
 
     // Socket, user data channel
     const val SOCKET_USER_DATA_CHANNEL = "data"

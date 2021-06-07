@@ -52,7 +52,7 @@ class SignInFragment : Fragment() {
             requireContext(),
             text,
             R.color.purple_500,
-            14,
+            0,
             text.length,
             false
         )

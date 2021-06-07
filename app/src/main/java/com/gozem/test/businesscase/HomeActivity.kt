@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
@@ -111,11 +112,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
         mMap.uiSettings.isCompassEnabled = true
 
         // Check permission state and initialize Google Play Services
-        if (allPermissionsGranted(this, *PERMISSIONS)) {
-            initView()
-        } else {
-            requestForPermissions(this)
-        }
+        initView()
     }
 
     @SuppressLint("MissingPermission")
@@ -137,6 +134,25 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onConnectionSuspended(p0: Int) { }
 
+    @SuppressLint("MissingPermission")
+    override fun onLocationChanged(location: Location) {
+        updateMapView(location, null)
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) { }
+
+    @SuppressLint("MissingPermission")
+    private fun initView() {
+        if (allPermissionsGranted(this, *PERMISSIONS)) {
+            if (mGoogleApiClient == null) {
+                buildGoogleApiClient()
+            }
+            mMap.isMyLocationEnabled = true
+        } else {
+            requestForPermissions(this)
+        }
+    }
+
     @Synchronized
     private fun buildGoogleApiClient() {
         mGoogleApiClient = GoogleApiClient.Builder(this)
@@ -145,25 +161,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
             .addApi(LocationServices.API)
             .build()
         mGoogleApiClient?.connect()
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun onLocationChanged(location: Location) {
-        if (allPermissionsGranted(this, *PERMISSIONS)) {
-            updateMapView(location, null)
-        } else {
-            requestForPermissions(this)
-        }
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) { }
-
-    @SuppressLint("MissingPermission")
-    private fun initView() {
-        if (mGoogleApiClient == null) {
-            buildGoogleApiClient()
-        }
-        mMap.isMyLocationEnabled = true
     }
 
     private fun initObservable() {
@@ -199,8 +196,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
                     // Display user email address
                     tvUserEmail.text = dataDriven.content["email"].toString()
+
+                    // Change view visibility
+                    cardProfile.visibility = VISIBLE
                 }
                 MAP_TYPE -> {
+                    // Create location object
+                    val location = Location("")
+                    location.latitude = dataDriven.content["lat"] as Double
+                    location.longitude = dataDriven.content["lng"] as Double
+
                     // Initialize marker icon
                     Glide.with(this)
                         .asBitmap()
@@ -210,22 +215,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
                                                          transition:
                                                          Transition<in Bitmap>?) {
                                 markerBitmapIcon = resource
+                                // Update the map content
+                                updateMapView(
+                                    location,
+                                    dataDriven.content["title"].toString()
+                                )
                             }
+
+                            override fun onLoadFailed(errorDrawable: Drawable?) {
+                                super.onLoadFailed(errorDrawable)
+                                // Update the map content
+                                updateMapView(
+                                    location,
+                                    dataDriven.content["title"].toString()
+                                )
+                            }
+
                             override fun onLoadCleared(placeholder: Drawable?) { }
                         })
-                    // Create location object
-                    val location = Location("")
-                    location.latitude = dataDriven.content["lat"] as Double
-                    location.longitude = dataDriven.content["lng"] as Double
-                    // Check permissions and update the map content
-                    if (allPermissionsGranted(this, *PERMISSIONS)) {
-                        updateMapView(
-                            location,
-                            dataDriven.content["title"].toString()
-                        )
-                    } else {
-                        requestForPermissions(this)
-                    }
                 }
                 else -> {
                     // Display current user data value
@@ -250,35 +257,39 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
     @SuppressLint("MissingPermission")
     private fun updateMapView(location: Location, title: String?) {
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker?.remove()
-        }
-        // Set marker location
-        val latLng = LatLng(location.latitude, location.longitude)
-        // Showing Current Location Marker on Map
-        val markerOptions = MarkerOptions()
-        // Set marker position
-        markerOptions.position(latLng)
-        // Set marker title
-        if (!title.isNullOrEmpty() && !title.isNullOrBlank()) {
-            markerOptions.title(title)
-        }
-        // Set marker icon
-        if (markerBitmapIcon != null) {
-            markerOptions.icon(
-                BitmapDescriptorFactory
-                    .fromBitmap(markerBitmapIcon!!)
-            )
-        }
+        if (allPermissionsGranted(this, *PERMISSIONS)) {
+            requestForPermissions(this)
+        } else {
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker?.remove()
+            }
+            // Set marker location
+            val latLng = LatLng(location.latitude, location.longitude)
+            // Showing Current Location Marker on Map
+            val markerOptions = MarkerOptions()
+            // Set marker position
+            markerOptions.position(latLng)
+            // Set marker title
+            if (!title.isNullOrEmpty() && !title.isNullOrBlank()) {
+                markerOptions.title(title)
+            }
+            // Set marker icon
+            if (markerBitmapIcon != null) {
+                markerOptions.icon(
+                    BitmapDescriptorFactory
+                        .fromBitmap(markerBitmapIcon!!)
+                )
+            }
 
-        mCurrLocationMarker = mMap.addMarker(markerOptions)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                mGoogleApiClient!!,
-                this
-            )
+            mCurrLocationMarker = mMap.addMarker(markerOptions)
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+            if (mGoogleApiClient != null) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(
+                    mGoogleApiClient!!,
+                    this
+                )
+            }
         }
     }
 }

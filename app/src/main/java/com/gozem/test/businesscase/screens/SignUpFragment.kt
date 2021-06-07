@@ -51,7 +51,7 @@ class SignUpFragment : Fragment() {
             requireContext(),
             text,
             R.color.purple_500,
-            27,
+            0,
             text.length,
             false
         )
