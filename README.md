@@ -19,7 +19,8 @@ L'API utilisé pour la simulation du système d'authentification se trouve à l'
   - Version du projet: 1.0
   - Version minimale d'Android supportée: Android 6.0 (API 23)
 
-# N.B: Pour la configuration du serveur socket (socketIO), veuillez émettre
+
+N.B: Pour la configuration du serveur socket (socketIO), veuillez émettre
 sur le canal 'data' afin de mettre à jour la section 'Data' (Information) de la page d'accueil.
   
  -------------------------------------------------------------------
@@ -44,5 +45,6 @@ The mocked API is located at the following addresses:
   - Project version: 1.0
   - Minimum supported Android version: Android 6.0 (API 23)
 
- # N.B.: For the socketIO configuration, please emit
+
+N.B.: For the socketIO configuration, please emit
  on the 'data' channel to update the 'Data' section of the home page.
