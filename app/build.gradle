@@ -29,6 +29,12 @@ android {
                 // you can speed up your build by disabling mapping file uploading.
                 mappingFileUploadEnabled false
             }
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def appName = "BusinessCase_debug"
+                    outputFileName = appName + "_${variant.versionName}.apk"
+                }
+            }
         }
         release {
             minifyEnabled false
@@ -36,6 +42,12 @@ android {
                 // If you don't need crash reporting for your debug build,
                 // you can speed up your build by disabling mapping file uploading.
                 mappingFileUploadEnabled false
+            }
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def appName = "BusinessCase_release"
+                    outputFileName = appName + "_${variant.versionName}.apk"
+                }
             }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
