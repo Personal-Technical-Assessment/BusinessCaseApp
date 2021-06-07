@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sign_in_screen_parent_padding">25dp</dimen>
+    <dimen name="sign_in_screen_title_margin_top">15dp</dimen>
+    <dimen name="sign_in_screen_title_text_size">30sp</dimen>
+    <dimen name="sign_in_screen_email_field_margin_top">50dp</dimen>
+    <dimen name="sign_in_screen_password_field_margin_top">15dp</dimen>
+    <dimen name="sign_in_screen_button_text_margin_top">25dp</dimen>
+    <dimen name="sign_in_screen_button_text_size">20sp</dimen>
+    <dimen name="sign_in_screen_last_view_margin_top">15dp</dimen>
+    <dimen name="sign_up_screen_back_arrow_width">30dp</dimen>
+    <dimen name="sign_up_screen_back_arrow_height">30dp</dimen>
+    <dimen name="sign_up_screen_back_arrow_margin">15dp</dimen>
+    <dimen name="sign_up_screen_title_margin_top">20dp</dimen>
+    <dimen name="sign_up_screen_fullName_text_field_margin_top">30dp</dimen>
+    <dimen name="link_text_size">15sp</dimen>
+    <dimen name="home_screen_user_data_layout_margin">10dp</dimen>
+    <dimen name="home_screen_user_profile_picture_width">80dp</dimen>
+    <dimen name="user_profile_card_margin">10dp</dimen>
+    <dimen name="user_profile_card_radius">5dp</dimen>
+    <dimen name="user_profile_card_elevation">2dp</dimen>
+</resources>

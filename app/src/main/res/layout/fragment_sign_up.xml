@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:background="@null"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.gozem.test.businesscase.screens.SignUpFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgBackButton"
+        android:layout_width="@dimen/sign_up_screen_back_arrow_width"
+        android:layout_height="@dimen/sign_up_screen_back_arrow_height"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/sign_up_screen_back_arrow_margin"
+        app:srcCompat="@drawable/ic_arrow_back_icon"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgBackButton"
+        android:padding="@dimen/sign_in_screen_parent_padding"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sign_up_screen_title_margin_top"
+            android:text="@string/sign_up_screen_title_string"
+            android:textSize="@dimen/sign_in_screen_title_text_size"
+            android:textColor="@color/black"
+            android:fontFamily="@font/source_sans_pro"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fullNameTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sign_up_screen_fullName_text_field_margin_top"
+            android:hint="@string/sign_up_screen_fullName_text_field_hint_string"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/source_sans_pro"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sign_in_screen_password_field_margin_top"
+            android:hint="@string/email_text_field_hint_string"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/source_sans_pro"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_text_field_hint_string"
+            android:layout_marginTop="@dimen/sign_in_screen_password_field_margin_top"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sign_up_screen_confirm_password_text_field_hint_string"
+            android:layout_marginTop="@dimen/sign_in_screen_password_field_margin_top"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/sign_in_screen_button_text_margin_top"
+            android:text="@string/sign_up_screen_button_text_string"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sign_in_screen_button_text_size"
+            android:fontFamily="@font/source_sans_pro"
+            />
+
+        <TextView
+            android:id="@+id/signInText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_screen_sign_in_redirect_string"
+            android:textSize="@dimen/link_text_size"
+            android:fontFamily="@font/source_sans_pro"
+            android:layout_marginTop="@dimen/sign_in_screen_last_view_margin_top"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

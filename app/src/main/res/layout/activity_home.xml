@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_screen_background"
+    tools:context=".HomeActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/user_profile_card_margin"
+        app:cardCornerRadius="@dimen/user_profile_card_radius"
+        app:cardElevation="@dimen/user_profile_card_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userProfilePicture"
+                android:layout_width="@dimen/home_screen_user_profile_picture_width"
+                android:layout_height="@dimen/home_screen_user_profile_picture_width"
+                android:layout_margin="@dimen/sign_in_screen_title_margin_top"
+                android:scaleType="centerCrop"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/lorem"
+                    android:textSize="@dimen/sign_in_screen_button_text_size"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    />
+
+                <TextView
+                    android:id="@+id/tvUserEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/lorem"
+                    android:textSize="@dimen/sign_in_screen_button_text_size"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/source_sans_pro"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cardProfile"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/layoutData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/home_screen_user_data_layout_margin"
+        android:layout_margin="@dimen/home_screen_user_data_layout_margin"
+        android:background="@drawable/user_data_layout_background"
+        android:gravity="start|center_vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info_label_text"
+            android:textSize="@dimen/sign_in_screen_button_text_size"
+            android:textColor="@color/black"
+            android:fontFamily="@font/source_sans_pro_semi_bold"
+            />
+
+        <TextView
+            android:id="@+id/tvData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem"
+            android:textSize="@dimen/sign_in_screen_button_text_size"
+            android:textColor="@color/black"
+            android:fontFamily="@font/source_sans_pro"
+            android:maxLines="2"
+            android:ellipsize="end"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

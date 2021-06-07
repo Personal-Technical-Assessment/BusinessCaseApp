@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:background="@null"
+    android:paddingStart="@dimen/sign_in_screen_parent_padding"
+    android:paddingEnd="@dimen/sign_in_screen_parent_padding"
+    android:layout_gravity="center"
+    android:gravity="top|center_horizontal"
+    tools:context="com.gozem.test.businesscase.screens.SignInFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sign_in_screen_title_margin_top"
+        android:text="@string/sign_in_text_string"
+        android:textSize="@dimen/sign_in_screen_title_text_size"
+        android:textColor="@color/black"
+        android:fontFamily="@font/source_sans_pro"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sign_in_screen_email_field_margin_top"
+        android:hint="@string/email_text_field_hint_string"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:fontFamily="@font/source_sans_pro"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_text_field_hint_string"
+        android:layout_marginTop="@dimen/sign_in_screen_password_field_margin_top"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/sign_in_screen_button_text_margin_top"
+        android:text="@string/sign_in_button_text_string"
+        android:textAllCaps="false"
+        android:textSize="@dimen/sign_in_screen_button_text_size"
+        android:fontFamily="@font/source_sans_pro"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sign_in_screen_last_view_margin_top">
+
+        <TextView
+            android:id="@+id/signUpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/new_here_sign_in_string"
+            android:textSize="@dimen/link_text_size"
+            android:fontFamily="@font/source_sans_pro"
+            tools:ignore="RelativeOverlap"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

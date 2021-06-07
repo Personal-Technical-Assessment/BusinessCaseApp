@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BusinessCase</string>
+    <string name="email_text_field_hint_string">Email</string>
+    <string name="password_text_field_hint_string">Password</string>
+    <string name="sign_in_text_string">Sign In</string>
+    <string name="new_here_sign_in_string">New here? Sign up</string>
+    <string name="forgot_password_string">Forgot password?</string>
+    <string name="sign_in_button_text_string">Sign in</string>
+    <string name="sign_up_screen_title_string">Sign up</string>
+    <string name="sign_up_screen_fullName_text_field_hint_string">Full name</string>
+    <string name="sign_up_screen_confirm_password_text_field_hint_string">Confirm password</string>
+    <string name="sign_up_screen_button_text_string">Sign up</string>
+    <string name="sign_up_screen_sign_in_redirect_string">Already have an account? Sign in</string>
+    <string name="login_progress_pop_up_texte">Connection...</string>
+    <string name="required_email_string">Email is required.</string>
+    <string name="required_password_string">Password is required.</string>
+    <string name="required_fullName_string">Full name is required.</string>
+    <string name="required_password_confirmation_string">Please confirm the password.</string>
+    <string name="password_confirmation_error_message">Please enter the same password.</string>
+    <string name="invalid_email_message_string">Invalid email !</string>
+    <string name="invalid_password_error_string">Wrong password!</string>
+    <string name="user_not_found_message">User not found</string>
+    <string name="info_label_text">Information</string>
+    <string name="fetch_data_driven_failure_string">Unable to fetch data driven. Check your internet and try again please.</string>
+    <string name="permission_do_not_ask_again_checked_message">In order to use the map, please go to the device settings to grant permission.</string>
+    <string name="permission_denied_message_string">Permission denied</string>
+    <string name="fetch_data_driven_string">Data recovery…</string>
+    <string name="socket_connection_error_message">Connection to the socket server failed. Check the internet connection and try again.</string>
+    <string name="socker_url_empty_string">Please configure the socket server url.</string>
+    <string name="service_unavailable_string">Service unavailable</string>
+</resources>
