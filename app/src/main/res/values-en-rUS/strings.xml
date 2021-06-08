@@ -12,7 +12,7 @@
     <string name="sign_up_screen_confirm_password_text_field_hint_string">Confirm password</string>
     <string name="sign_up_screen_button_text_string">Sign up</string>
     <string name="sign_up_screen_sign_in_redirect_string">Already have an account? Sign in</string>
-    <string name="login_progress_pop_up_texte">Connection...</string>
+    <string name="login_progress_pop_up_text">Connection…</string>
     <string name="required_email_string">Email is required.</string>
     <string name="required_password_string">Password is required.</string>
     <string name="required_fullName_string">Full name is required.</string>
@@ -27,6 +27,7 @@
     <string name="permission_denied_message_string">Permission denied</string>
     <string name="fetch_data_driven_string">Data recovery…</string>
     <string name="socket_connection_error_message">Connection to the socket server failed. Check the internet connection and try again.</string>
-    <string name="socker_url_empty_string">Please configure the socket server url.</string>
+    <string name="socket_url_empty_string">Please configure the socket server url.</string>
     <string name="service_unavailable_string">Service unavailable</string>
+    <string name="turn_on_gps_message">Kindly turn on your GPS</string>
 </resources>

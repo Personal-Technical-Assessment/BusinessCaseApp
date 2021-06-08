@@ -2,6 +2,7 @@ package com.gozem.test.businesscase
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.location.Location
@@ -16,9 +17,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.gozem.test.businesscase.databinding.ActivityHomeBinding
 import com.gozem.test.businesscase.models.DataDriven
 import com.gozem.test.businesscase.utils.Constants.ERROR_TOAST_TYPE
@@ -35,6 +36,7 @@ import com.gozem.test.businesscase.utils.Constants.MAP_TYPE
 import com.gozem.test.businesscase.utils.Constants.PERMISSIONS
 import com.gozem.test.businesscase.utils.Constants.PERMISSION_ALL
 import com.gozem.test.businesscase.utils.Constants.PROFILE_TYPE
+import com.gozem.test.businesscase.utils.Constants.REQUEST_CHECK_SETTINGS_GPS
 import com.gozem.test.businesscase.utils.Utils.allPermissionsGranted
 import com.gozem.test.businesscase.utils.Utils.displayToastMessage
 import com.gozem.test.businesscase.utils.Utils.requestForPermissions
@@ -46,7 +48,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     LocationListener {
-
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var mMap: GoogleMap
@@ -75,6 +76,33 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
         // Initialize viewModel observer
         initObservable()
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CHECK_SETTINGS_GPS -> when (resultCode) {
+                RESULT_OK -> {
+                    try {
+                        if (allPermissionsGranted(this, *PERMISSIONS)) {
+                            val myCurrentLocation = LocationServices.FusedLocationApi
+                                .getLastLocation(mGoogleApiClient!!)
+                            updateMapView(myCurrentLocation, null)
+                        } else {
+                            requestForPermissions(this)
+                        }
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance()
+                            .recordException(RuntimeException(e))
+                    }
+                }
+                RESULT_CANCELED -> displayToastMessage(
+                    getString(R.string.turn_on_gps_message),
+                    INFO_TOAST_TYPE
+                )
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -117,18 +145,45 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
     @SuppressLint("MissingPermission")
     override fun onConnected(p0: Bundle?) {
-        mLocationRequest = LocationRequest()
-        mLocationRequest!!.interval = 1000
-        mLocationRequest!!.fastestInterval = 1000
-        mLocationRequest!!.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (allPermissionsGranted(this, *PERMISSIONS)) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient!!,
-                mLocationRequest!!,
-                this
-            )
-        } else {
-            requestForPermissions(this)
+        try {
+            mLocationRequest = LocationRequest()
+            mLocationRequest!!.interval = 3000
+            mLocationRequest!!.fastestInterval = 3000
+            mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            if (allPermissionsGranted(this, *PERMISSIONS)) {
+                val builder = LocationSettingsRequest.Builder()
+                    .addLocationRequest(mLocationRequest!!)
+                builder.setAlwaysShow(true)
+                LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient!!,
+                    mLocationRequest!!,
+                    this
+                )
+                val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi
+                    .checkLocationSettings(mGoogleApiClient!!, builder.build())
+                result.setResultCallback { it ->
+                    when (it.status.statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->                                     // Location settings are not satisfied.
+                            try {
+                                // Show the dialog by calling startResolutionForResult(),
+                                // and check the result in onActivityResult().
+                                // Ask to turn on GPS automatically
+                                it.status.startResolutionForResult(
+                                    this,
+                                    REQUEST_CHECK_SETTINGS_GPS
+                                )
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance()
+                                    .recordException(RuntimeException(e))
+                            }
+                    }
+                }
+            } else {
+                requestForPermissions(this)
+            }
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance()
+                .recordException(RuntimeException(e))
         }
     }
 
@@ -240,7 +295,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
                     val socketUrl = dataDriven.content["source"].toString()
                     if (TextUtils.isEmpty(socketUrl)) {
                         displayToastMessage(
-                            getString(R.string.socker_url_empty_string),
+                            getString(R.string.socket_url_empty_string),
                             ERROR_TOAST_TYPE
                         )
                     } else {

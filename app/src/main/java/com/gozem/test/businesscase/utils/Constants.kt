@@ -10,6 +10,7 @@ object Constants {
         Manifest.permission.ACCESS_FINE_LOCATION
     )
     const val PERMISSION_ALL = 19
+    const val REQUEST_CHECK_SETTINGS_GPS = 20
 
     // Application name
     val appName: String = appContext.getString(R.string.app_name)

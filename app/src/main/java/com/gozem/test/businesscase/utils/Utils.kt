@@ -106,7 +106,7 @@ object Utils {
     fun buildLoginProgressPopUp(activity: Activity): MaterialDialog? {
         try {
             return MaterialDialog.Builder(activity)
-                .content(activity.getString(R.string.login_progress_pop_up_texte))
+                .content(activity.getString(R.string.login_progress_pop_up_text))
                 .title(activity.resources.getString(R.string.app_name))
                 .progress(true, 0)
                 .build()
