@@ -31,4 +31,7 @@
     <string name="socket_url_empty_string">Veuillez configurer l\'url du serveur socket.</string>
     <string name="service_unavailable_string">Service indisponible</string>
     <string name="turn_on_gps_message">Veuillez activer votre GPS</string>
+    <string name="welcome_string">Bienvenue sur BusinessCaseApp</string>
+    <string name="or_option_string">OU</string>
+    <string name="log_out_progress_content_string">Déconnexion…</string>
 </resources>

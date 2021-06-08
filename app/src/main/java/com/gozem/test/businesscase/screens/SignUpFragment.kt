@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.gozem.test.businesscase.R
 import com.gozem.test.businesscase.application.appContext
 import com.gozem.test.businesscase.models.User
-import com.gozem.test.businesscase.utils.Constants.ERROR_TOAST_TYPE
 import com.gozem.test.businesscase.utils.Utils
 import com.gozem.test.businesscase.utils.Utils.displayToastMessage
 import com.gozem.test.businesscase.utils.Utils.validateUserSignUpCredentials
@@ -50,7 +49,7 @@ class SignUpFragment : Fragment() {
         signInText.text = Utils.changeColorOfPartOfString(
             requireContext(),
             text,
-            R.color.purple_500,
+            R.color.light_green,
             0,
             text.length,
             false
@@ -59,7 +58,7 @@ class SignUpFragment : Fragment() {
 
     private fun initListener() {
         imgBackButton.setOnClickListener {
-            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+            findNavController().navigate(R.id.action_signUpFragment_to_splashScreenFragment)
         }
 
         signUpButton.setOnClickListener {
@@ -72,7 +71,7 @@ class SignUpFragment : Fragment() {
             )
 
             if (error.isNotEmpty()) {
-                displayToastMessage(error, ERROR_TOAST_TYPE)
+                displayToastMessage(error)
             } else {
                 val user = User(
                     0,

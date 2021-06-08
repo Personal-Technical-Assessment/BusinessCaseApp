@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/sign_up_screen_title_margin_top"
             android:text="@string/sign_up_screen_title_string"
             android:textSize="@dimen/sign_in_screen_title_text_size"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:fontFamily="@font/source_sans_pro"
             />
 

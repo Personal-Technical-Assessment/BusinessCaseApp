@@ -15,9 +15,9 @@
         android:layout_margin="@dimen/user_profile_card_margin"
         app:cardCornerRadius="@dimen/user_profile_card_radius"
         app:cardElevation="@dimen/user_profile_card_elevation"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -29,12 +29,17 @@
                 android:layout_height="@dimen/home_screen_user_profile_picture_width"
                 android:layout_margin="@dimen/sign_in_screen_title_margin_top"
                 android:scaleType="centerCrop"
+                android:layout_alignParentStart="true"
                 />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/sign_in_screen_title_margin_top"
+                android:layout_marginEnd="@dimen/user_profile_card_radius"
+                android:layout_toEndOf="@+id/userProfilePicture"
+                android:layout_toStartOf="@+id/logoutButton"
                 android:gravity="start">
 
                 <TextView
@@ -43,7 +48,9 @@
                     android:layout_height="wrap_content"
                     tools:text="@tools:sample/lorem"
                     android:textSize="@dimen/sign_in_screen_button_text_size"
-                    android:textColor="@color/black"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/light_green"
                     android:fontFamily="@font/source_sans_pro"
                     />
 
@@ -52,14 +59,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="@tools:sample/lorem"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textSize="@dimen/sign_in_screen_button_text_size"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_green"
                     android:fontFamily="@font/source_sans_pro"
                     />
 
             </LinearLayout>
 
-        </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logoutButton"
+                android:layout_width="@dimen/log_out_icon_width"
+                android:layout_height="@dimen/log_out_icon_width"
+                android:layout_margin="@dimen/user_profile_card_margin"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_log_out_icon"
+                />
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
@@ -69,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/cardProfile"
-
         />
 
     <LinearLayout

@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gozem.test.businesscase.R
 import com.gozem.test.businesscase.application.appContext
-import com.gozem.test.businesscase.utils.Constants.ERROR_TOAST_TYPE
 import com.gozem.test.businesscase.utils.Utils.changeColorOfPartOfString
 import com.gozem.test.businesscase.utils.Utils.displayToastMessage
 import com.gozem.test.businesscase.utils.Utils.md5Hash
@@ -51,7 +50,7 @@ class SignInFragment : Fragment() {
         signUpText.text = changeColorOfPartOfString(
             requireContext(),
             text,
-            R.color.purple_500,
+            R.color.light_green,
             0,
             text.length,
             false
@@ -59,6 +58,9 @@ class SignInFragment : Fragment() {
     }
 
     private fun initListener() {
+        imgBackButton.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_splashScreenFragment)
+        }
         signInButton.setOnClickListener {
             val error = validateUserSignInCredentials(
                 appContext,
@@ -66,7 +68,7 @@ class SignInFragment : Fragment() {
                 editPassword.text.toString().trim()
             )
             if (error.isNotEmpty()) {
-                displayToastMessage(error, ERROR_TOAST_TYPE)
+                displayToastMessage(error)
             } else {
                 mainViewModel.checkUserCredentials(
                     requireActivity(),
@@ -83,7 +85,7 @@ class SignInFragment : Fragment() {
 
     private fun initObservable() {
         mainViewModel.errorMessage.observe(viewLifecycleOwner, {
-            displayToastMessage(it, ERROR_TOAST_TYPE)
+            displayToastMessage(it)
         })
     }
 }

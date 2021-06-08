@@ -30,8 +30,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.gozem.test.businesscase.databinding.ActivityHomeBinding
 import com.gozem.test.businesscase.models.DataDriven
-import com.gozem.test.businesscase.utils.Constants.ERROR_TOAST_TYPE
-import com.gozem.test.businesscase.utils.Constants.INFO_TOAST_TYPE
 import com.gozem.test.businesscase.utils.Constants.MAP_TYPE
 import com.gozem.test.businesscase.utils.Constants.PERMISSIONS
 import com.gozem.test.businesscase.utils.Constants.PERMISSION_ALL
@@ -74,6 +72,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
         // Fetch data driven list
         viewModel.fetchDataDriven(this)
 
+        // Initialize listener
+        initListener()
         // Initialize viewModel observer
         initObservable()
     }
@@ -98,8 +98,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
                     }
                 }
                 RESULT_CANCELED -> displayToastMessage(
-                    getString(R.string.turn_on_gps_message),
-                    INFO_TOAST_TYPE
+                    getString(R.string.turn_on_gps_message)
                 )
             }
         }
@@ -117,8 +116,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
                         Manifest.permission.ACCESS_FINE_LOCATION)) {
                     // If 'Don't ask again' option is checked
                     displayToastMessage(
-                        getString(R.string.permission_do_not_ask_again_checked_message),
-                        INFO_TOAST_TYPE
+                        getString(R.string.permission_do_not_ask_again_checked_message)
                     )
                 } else {
                     requestForPermissions(this)
@@ -196,6 +194,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onConnectionFailed(p0: ConnectionResult) { }
 
+    private fun initListener() {
+        logoutButton.setOnClickListener {
+            viewModel.processLogOut()
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private fun initView() {
         if (allPermissionsGranted(this, *PERMISSIONS)) {
@@ -222,8 +226,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
         viewModel.dataDrivenLiveData.observe(this, {
             if (it == null) {
                 displayToastMessage(
-                    getString(R.string.fetch_data_driven_failure_string),
-                    ERROR_TOAST_TYPE)
+                    getString(R.string.fetch_data_driven_failure_string)
+                )
             } else {
                 updateUI(it)
             }
@@ -231,6 +235,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
         viewModel.dataValue.observe(this, {
             if (it != null) {
                 tvData.text = it
+            }
+        })
+        viewModel.signOut.observe(this, {
+            if (!it) {
+                startActivity(
+                    Intent(
+                        this@HomeActivity,
+                        MainActivity::class.java
+                    )
+                )
+                finish()
             }
         })
     }
@@ -295,8 +310,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback,
                     val socketUrl = dataDriven.content["source"].toString()
                     if (TextUtils.isEmpty(socketUrl)) {
                         displayToastMessage(
-                            getString(R.string.socket_url_empty_string),
-                            ERROR_TOAST_TYPE
+                            getString(R.string.socket_url_empty_string)
                         )
                     } else {
                         // Start socket worker and listen for user data update

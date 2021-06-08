@@ -14,4 +14,5 @@
     <dimen name="user_profile_card_margin">10dp</dimen>
     <dimen name="user_profile_card_radius">5dp</dimen>
     <dimen name="user_profile_card_elevation">2dp</dimen>
+    <dimen name="log_out_icon_width">25dp</dimen>
 </resources>

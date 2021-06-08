@@ -23,8 +23,6 @@ import com.gozem.test.businesscase.models.User
 import com.gozem.test.businesscase.utils.AppState
 import com.gozem.test.businesscase.utils.Constants
 import com.gozem.test.businesscase.utils.Constants.DATA_DRIVEN_LIST_JSON
-import com.gozem.test.businesscase.utils.Constants.ERROR_TOAST_TYPE
-import com.gozem.test.businesscase.utils.Constants.INFO_TOAST_TYPE
 import com.gozem.test.businesscase.utils.Constants.SIGN_UP_WORKER_USER_DATA
 import com.gozem.test.businesscase.utils.Constants.SOCKET_USER_DATA_CHANNEL
 import com.gozem.test.businesscase.utils.Constants.SOCKET_WORKER_URL_KEY
@@ -46,6 +44,7 @@ class MainViewModel: ViewModel() {
     var errorMessage: MutableLiveData<String> = MutableLiveData()
     var dataDrivenLiveData: MutableLiveData<List<DataDriven>> = MutableLiveData()
     var dataValue: MutableLiveData<String> = MutableLiveData()
+    var signOut: MutableLiveData<Boolean> = MutableLiveData()
     private lateinit var webSocketClient: WebSocketClient
 
     fun start(activity: Activity) {
@@ -64,20 +63,25 @@ class MainViewModel: ViewModel() {
     fun checkUserCredentials(lifecycleOwner: LifecycleOwner,
                              email: String, password: String) {
         try {
-            val user: User = GsonBuilder().create()
-                .fromJson(prefs.authUserInfo, User::class.java)
+            if (prefs.authUserInfo.isNullOrEmpty()) {
+                errorMessage.postValue(
+                    appContext.getString(R.string.user_not_found_message))
+            } else {
+                val user: User = GsonBuilder().create()
+                    .fromJson(prefs.authUserInfo, User::class.java)
 
-            when {
-                user.email != email -> {
-                    errorMessage.postValue(
-                        appContext.getString(R.string.invalid_email_message_string))
-                }
-                user.password != password -> {
-                    errorMessage.postValue(
-                        appContext.getString(R.string.invalid_password_error_string))
-                }
-                else -> {
-                    requestSignIn(lifecycleOwner, user.id)
+                when {
+                    user.email != email -> {
+                        errorMessage.postValue(
+                            appContext.getString(R.string.invalid_email_message_string))
+                    }
+                    user.password != password -> {
+                        errorMessage.postValue(
+                            appContext.getString(R.string.invalid_password_error_string))
+                    }
+                    else -> {
+                        requestSignIn(lifecycleOwner, user.id)
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -204,7 +208,7 @@ class MainViewModel: ViewModel() {
                             if (message.isNullOrEmpty()) {
                                 dataDrivenLiveData.postValue(null)
                             } else {
-                                displayToastMessage(message, INFO_TOAST_TYPE)
+                                displayToastMessage(message)
                             }
                         }
                     }
@@ -247,8 +251,7 @@ class MainViewModel: ViewModel() {
                     } else {
                         displayToastMessage(
                             appContext.getString(
-                                R.string.socket_connection_error_message),
-                            ERROR_TOAST_TYPE
+                                R.string.socket_connection_error_message)
                         )
                     }
                 }
@@ -281,5 +284,18 @@ class MainViewModel: ViewModel() {
             SSLSocketFactory.getDefault() as SSLSocketFactory
         webSocketClient.setSocketFactory(socketFactory)
         webSocketClient.connect()
+    }
+
+    fun processLogOut() {
+        // Display loading pop up
+        loginProgressPopUp?.setContent(
+            appContext.getString(
+                R.string.log_out_progress_content_string)
+        )
+        loginProgressPopUp?.show()
+        Handler(Looper.getMainLooper()).postDelayed({
+            prefs.isSignIn = false
+            signOut.postValue(prefs.isSignIn)
+        }, 2000)
     }
 }

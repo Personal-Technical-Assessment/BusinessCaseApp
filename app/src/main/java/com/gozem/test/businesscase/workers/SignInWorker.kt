@@ -18,18 +18,18 @@ class SignInWorker(context: Context, params: WorkerParameters):
 
     override fun doWork(): Result {
         var mResult: Result? = null
-        "/users/:id$userId".httpGet()
-            .responseObject<User> { _, _, result ->
-                val user = result.component1()
-                mResult = if (user == null) {
-                    prefs.isSignIn = false
-                    Result.failure()
-                } else {
-                    prefs.isSignIn = true
-                    Result.success()
-                }
-            }
+        val request = "/users/$userId".httpGet()
+            .responseObject<User> ()
 
-        return mResult!!
+        val user = request.third.component1()
+        mResult = if (user == null) {
+            prefs.isSignIn = false
+            Result.failure()
+        } else {
+            prefs.isSignIn = true
+            Result.success()
+        }
+
+        return mResult
     }
 }

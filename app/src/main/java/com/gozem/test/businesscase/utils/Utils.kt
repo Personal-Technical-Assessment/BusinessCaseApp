@@ -3,7 +3,6 @@ package com.gozem.test.businesscase.utils
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -40,14 +39,8 @@ object Utils {
         return input
     }
 
-    fun displayToastMessage(message: String, type: String) {
-        val toast = Toast.makeText(appContext, message, Toast.LENGTH_LONG)
-        if (type == "error") {
-            toast.view?.setBackgroundColor(Color.RED)
-            toast.show()
-        } else {
-            toast.show()
-        }
+    fun displayToastMessage(message: String) {
+        Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
     }
 
     fun changeColorOfPartOfString(context: Context, text: String,

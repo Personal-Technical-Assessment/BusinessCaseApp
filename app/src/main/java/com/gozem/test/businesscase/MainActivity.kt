@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 override fun handleOnBackPressed() {
                     if (navController.currentDestination != null) {
                         if (navController.currentDestination?.id
-                            == R.id.signInFragment) {
+                            == R.id.splashScreenFragment) {
                             finish()
                         } else {
                             navController.navigateUp()
