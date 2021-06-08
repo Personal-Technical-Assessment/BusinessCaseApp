@@ -1,9 +1,9 @@
 # BusinessCaseApp
-Cette application a été conçue pour servit de test d'évaluation au poste de développeur Android à Gozem.
+Cette application a été conçue pour servir de test d'évaluation au poste de développeur Android à Gozem.
 
 # Fonctionnalitées
 Elle met en avant les fonctionalitées suivantes:
-  - Système d'authentification(Inscription/Connection) d'un utilisateur
+  - Système d'authentification(Inscription/Connexion) d'un utilisateur
   - Affichage de la carte graphique de google (Google map) 
   - Récupération de la position actuelle de l'utilisateur en temps réel
   - Affichage de la position actuelle de l'utilisateur
